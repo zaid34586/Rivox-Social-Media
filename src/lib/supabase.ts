@@ -1,7 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 import { createVerdentAuth } from '@verdent/auth-js';
 
-export const supabase = createClient(window.location.origin, 'verdent-baas-proxy', {
+// On Verdent hosting: same-origin BaaS proxy is used automatically.
+// On other hosts (e.g. Vercel): set VITE_SUPABASE_URL + VITE_SUPABASE_PUBLISHABLE_KEY env vars.
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || window.location.origin;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'verdent-baas-proxy';
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -9,7 +14,17 @@ export const supabase = createClient(window.location.origin, 'verdent-baas-proxy
   },
 });
 
-export const auth = createVerdentAuth({ supabase });
+export const auth = createVerdentAuth({
+  supabase,
+  ...(import.meta.env.VITE_VERDENT_OAUTH_INITIATE_URL
+    ? { oauth: { authorizeUrl: import.meta.env.VITE_VERDENT_OAUTH_INITIATE_URL } }
+    : {}),
+});
+
+// Edge Functions live on the Supabase project, not the web host.
+export const EDGE_FUNCTIONS_URL = import.meta.env.VITE_SUPABASE_URL
+  ? `${import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '')}/functions/v1`
+  : `${window.location.origin}/functions/v1`;
 
 export const PLATFORMS = ['instagram', 'x', 'linkedin'] as const;
 export type Platform = (typeof PLATFORMS)[number];

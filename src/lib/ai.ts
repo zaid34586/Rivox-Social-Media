@@ -1,4 +1,4 @@
-import { supabase, type Brand, type Platform } from './supabase';
+import { supabase, EDGE_FUNCTIONS_URL, type Brand, type Platform } from './supabase';
 
 // ---------- Hook / template libraries ----------
 const HOOKS: Record<Platform, string[]> = {
@@ -107,7 +107,7 @@ export async function tryEdgeAI(brand: Brand, platform: Platform, topic: string)
   try {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return null;
-    const res = await fetch(`${window.location.origin}/functions/v1/ai-generate`, {
+    const res = await fetch(`${EDGE_FUNCTIONS_URL}/ai-generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
       body: JSON.stringify({
@@ -130,7 +130,7 @@ export async function tryEdgeAIArticle(brand: Brand, keyword: string): Promise<{
   try {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return null;
-    const res = await fetch(`${window.location.origin}/functions/v1/ai-generate`, {
+    const res = await fetch(`${EDGE_FUNCTIONS_URL}/ai-generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
       body: JSON.stringify({
