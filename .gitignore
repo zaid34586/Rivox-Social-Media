@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.verdent/
+tsconfig.tsbuildinfo
+*.local
+.env
+.env.*

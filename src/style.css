@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0a0a12;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.glow-btn {
+  background: linear-gradient(90deg, #7c3aed, #c026d3);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: filter 0.15s, transform 0.1s;
+  border: none;
+  cursor: pointer;
+}
+.glow-btn:hover { filter: brightness(1.12); }
+.glow-btn:active { transform: scale(0.98); }
+.glow-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ghost-btn {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  background: transparent;
+  cursor: pointer;
+}
+.ghost-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+.input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder { color: #64748b; }
+.input:focus {
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+select.input option { background: #12121e; }
+
+.grad-text {
+  background: linear-gradient(90deg, #a78bfa, #e879f9, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
